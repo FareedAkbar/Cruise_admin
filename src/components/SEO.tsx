@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 const SEO: React.FC<SEOProps> = ({ description, keywords, title }) => (
   <Head>
-    <title>{title} | Next.Js free admin react template</title>
+    <title>CRUISE</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords?.join(', ')} />
     <meta property="og:type" content="website" />
@@ -15,11 +15,11 @@ const SEO: React.FC<SEOProps> = ({ description, keywords, title }) => (
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:site" content="" />
-    <meta name="twitter:creator" content="@AhmedElywh" />
+    <meta name="twitter:creator" content="h" />
     <meta name="twitter:image" content="" />
     <meta property="og:image" content="" />
-    <link rel="icon" type="image/png" href="/icons/icon-72x72.png" />
-    <link rel="apple-touch-icon" type="image/png" href="/icons/icon-72x72.png" />
+    {/* <link rel="icon" type="image/png" href="/icons/icon-72x72.png" />
+    <link rel="apple-touch-icon" type="image/png" href="/icons/icon-72x72.png" /> */}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171177495-4"></script>
     <script
       dangerouslySetInnerHTML={{
@@ -44,7 +44,7 @@ export interface SEOProps {
 }
 
 SEO.defaultProps = {
-  description: 'Free admin dashboard template based on Next.Js with @paljs/ui component package',
+  description: 'admin dashboard template based on Next.Js with @paljs/ui component package',
   keywords: [
     'admin-dashboard',
     'admin',

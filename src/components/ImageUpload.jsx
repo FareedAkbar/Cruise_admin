@@ -1,12 +1,11 @@
 import React from "react";
-
-
 import { ApolloProvider } from "@apollo/react-hooks";
-
+import { Button,Alert } from 'antd';
 import gql from "graphql-tag";
 import { ApolloClient } from "apollo-client";
 import { createUploadLink } from "apollo-upload-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import 'antd/dist/antd.css';
 
 const cache = new InMemoryCache();
 
@@ -26,25 +25,24 @@ const UPLOAD = gql`
   }
 `;
 
-class App extends React.Component {
+class ImageUpload extends React.Component {
   state = {
-    image: null
+    image: null,
+    success: false
   };
 
   onImageChange = event => {
-    console.log(event.target.files);
-
+  
     this.setState({
+      success: false,
       image: event.target.files[0]
     });
   };
 
   onSubmit = e => {
     e.preventDefault();
-
-    console.log(this.state.image);
-
-    client
+    if(this.state.image){
+      client
       .mutate({
         mutation: UPLOAD,
         variables: {
@@ -52,29 +50,43 @@ class App extends React.Component {
         }
       })
       .then(res => {
-        console.log(res);
+        
+        this.props.ImageID(res.data.upload.id)
       })
       .catch(err => {
         console.error(err);
       });
+    }else{
+      console.log("aa")
+      this.props.ImageID(null)
+      this.setState({
+        success: true
+      })
+      
+    }
+  
   };
 
   render() {
+    const {success} = this.state
     return (
       <ApolloProvider client={client}>
-        <form onSubmit={this.onSubmit}>
+       {success && <Alert message="Select Image" type="error" showIcon />} 
           <input
             type="file"
             name="files"
             onChange={this.onImageChange}
             alt="image"
+            style={{borderRadius: 5, color: "green"}}
+            
           />
           <br />
-          <button type="submit">Send</button>
-        </form>
+          <Button type="primary" onClick={this.onSubmit} 
+           style={{borderRadius: 5,marginTop:"5px"}}>Upload Image</Button>
+        
       </ApolloProvider>
     );
   }
 }
 
-export default App;
+export default ImageUpload;

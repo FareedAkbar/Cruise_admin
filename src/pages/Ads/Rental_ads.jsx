@@ -1,16 +1,66 @@
 import React, { useEffect, useState } from "react";
-import { useQuery, gql } from "@apollo/client";
-import { Load_Cars } from "../../GraphQL/Queries";
-import { Card,CardBody,CardHeader} from '@paljs/ui/Card';
+import { useQuery, gql,useMutation } from "@apollo/client";
+import { RENT_CARS_AD } from "../../GraphQL/Queries";
 import Layout from 'Layouts'
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
 import withAuth from '../../components/authentication'
-import { Table, Space,Button,Switch } from 'antd';
+import { Table, Space,Button,Switch,Image } from 'antd';
 import 'antd/dist/antd.css';
+import { UPDATE_CAR_STATUS_RENT } from "../../GraphQL/rentMutations";
 
-function SaleAds() {
+function RentAds() {
+
+  const queryMultiple = () => {
+    const rentCars = useQuery(RENT_CARS_AD);
+    return [rentCars];
+  }
+  
+  const [
+      { loading: loading, data: data1 },
+  ] = queryMultiple()
+
+  const [RentCars, setRentCars] = useState([]);
+ 
+  useEffect(() => {
+    if(data1){
+      setRentCars(data1.rentCars);
+    }
+
+  }, [data1]);
+ 
+  const [updateRentCar,{ data}] = useMutation(UPDATE_CAR_STATUS_RENT,{
+    onCompleted: (data) => {
+      handleCancel()
+     setSucess(true)
+    
+    }
+  });
+  const updatecar = (id,status) =>{
+   console.log(id,status)
+   updateRentCar({
+      variables: {
+        id: id,
+        status: status
+      },
+    }
+   );
+
+  }
+ 
     const columns = [
+      {
+        title: "Image",
+        dataIndex: "media", 
+        render: image => {
+          const name = "http://localhost:1337"+image[0].url
+        return(
+          <Image
+      width={100}
+      src={name}
+    />
+        )} 
+  },
         {
           title: 'Car#',
           dataIndex: 'car_no',
@@ -54,45 +104,27 @@ function SaleAds() {
           title: 'Status',
           dataIndex: 'status',
           key: 'status',
-          render: status =>{
+          render: (text,status,index) =>{
             function onChange(checked) {
+              updatecar(status.car_no,!checked)
                 return !checked
               }
           
           return (
-                    <Switch defaultChecked={status} onChange={onChange} />
+                    <Switch defaultChecked={text} onChange={()=>onChange(text)} />
           )
         }
         },
       ];
       
      
-      
-  const queryMultiple = () => {
-    const cars = useQuery(Load_Cars);
-    return [cars];
-  }
-  
-  const [
-      { loading: loading, data: data },
-  ] = queryMultiple()
-
-  
-  const [cars, setCars] = useState([]);
- 
-  useEffect(() => {
-    if(data){
-        setCars(data.SaleCars);
-    }
-
-  }, [data]);
- 
   return (
     <Layout>
+      <h2>Rent Car Ads</h2>
            <Row>
                <Col breakPoint={{ xs: 12, lg: 12 }}>
               
-               <Table bordered columns={columns} size="middle" dataSource={data.saleCars} />
+               <Table bordered columns={columns} size="middle" dataSource={RentCars} />
          
                </Col>
            </Row>
@@ -102,4 +134,4 @@ function SaleAds() {
   );
 }
 
-export default withAuth(SaleAds);
+export default withAuth(RentAds);

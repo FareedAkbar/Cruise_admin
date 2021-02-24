@@ -119,26 +119,26 @@ const Header: React.FC<HeaderProps> = (props) => {
                 </Link>
               ),
             },
-            {
-              content: (
-                <SelectStyled
-                  instanceId="react-select-input"
-                  isSearchable={false}
-                  shape="SemiRound"
-                  placeholder="Themes"
-                  value={themeOptions().find((item) => item.value === props.theme.value)}
-                  options={themeOptions()}
-                  onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
-                />
-              ),
-            },
-            {
-              content: (
-                <Button size="Small" onClick={() => props.changeDir()}>
-                  {props.dir}
-                </Button>
-              ),
-            },
+            // {
+            //   content: (
+            //     <SelectStyled
+            //       instanceId="react-select-input"
+            //       isSearchable={false}
+            //       shape="SemiRound"
+            //       placeholder="Themes"
+            //       value={themeOptions().find((item) => item.value === props.theme.value)}
+            //       options={themeOptions()}
+            //       onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
+            //     />
+            //   ),
+            // },
+            // {
+            //   content: (
+            //     <Button size="Small" onClick={() => props.changeDir()}>
+            //       {props.dir}
+            //     </Button>
+            //   ),
+            // },
           ]}
         />
         <Actions
@@ -158,19 +158,19 @@ const Header: React.FC<HeaderProps> = (props) => {
               //   </a>
               // ),
             },
+            // {
+            //   content: (
+            //     <a
+            //       href="https://join.slack.com/t/paljs/shared_invite/zt-ju5j9bb9-onkc9ZksqPZq~yIYJ3BfKw"
+            //       target="_blank"
+            //       rel="noreferrer"
+            //     >
+            //       <img height="20" src="/slack.svg" alt="slack" />
+            //     </a>
+            //   ),
+            // },
             {
-              content: (
-                <a
-                  // href="https://join.slack.com/t/paljs/shared_invite/zt-ju5j9bb9-onkc9ZksqPZq~yIYJ3BfKw"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img height="20" src="/slack.svg" alt="slack" />
-                </a>
-              ),
-            },
-            {
-              icon: 'twitter',
+              // icon: 'twitter',
               // url: { href: 'https://twitter.com/AhmedElywh', target: '_blank' },
             },
             {
@@ -182,7 +182,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                   currentPath={router.pathname}
                   items={[
                     { title: 'Profile', link: { href: '/modal-overlays/tooltip' } },
-                    { title: 'Log out', link: { href: '/auth/appoloClient' } },
+                    { title: 'Log out', link: { href: '/auth/login' } },
                   ]}
                   Link={Link}
                 >

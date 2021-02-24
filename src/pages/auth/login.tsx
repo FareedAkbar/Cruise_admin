@@ -9,10 +9,13 @@ import Auth, { Group } from 'components/Auth';
 import Socials from 'components/Auth/Socials';
 import Layout from 'Layouts';
 import { useRouter } from 'next/router';
+import {Alert} from 'antd';
 
+import 'antd/dist/antd.css';
 
 
 export default function Login() {
+  const [war, setwar] = useState(false);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   // const { loading, error, data } = useQuery(LOGIN_USER_MUTATION);
@@ -35,7 +38,8 @@ export default function Login() {
   const addUser = () => {
 
    if(!identifier|| !password){
-     console.log("fields Empty")
+     setwar(true)
+     
    }else{
     login({
       variables: {
@@ -57,8 +61,10 @@ export default function Login() {
 
   return (
     
-    <Layout title="Login">
-      <Auth title="Login" subTitle="Hello! Login with your email">
+    <Layout title="Cruise">
+      {war && <Alert message="Fields Empty" type="warning" showIcon />
+   }
+      <Auth title="Cruise" subTitle="Hello! Login with your email">
         <form>
           <InputGroup fullWidth>
             <input type="email" placeholder="Email Address"
@@ -77,9 +83,9 @@ export default function Login() {
             <Checkbox checked onChange={onCheckbox}>
               Remember me
             </Checkbox>
-            <Link href="/auth/request-password">
+            {/* <Link href="/auth/request-password">
               <a>Forgot Password?</a>
-            </Link>
+            </Link> */}
           </Group>
           <Button status="Success" type="button" shape="SemiRound"
           onClick={addUser}
@@ -87,13 +93,13 @@ export default function Login() {
             Login
           </Button>
         </form>
-        <Socials />
-        <p>
+        {/* <Socials /> */}
+        {/* <p>
           Don&apos;t have account?{' '}
           <Link href="/auth/register">
             <a>Register</a>
           </Link>
-        </p>
+        </p> */}
       </Auth>
     </Layout>
   );

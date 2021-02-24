@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Ahmed Elywa",
   "dependencies": {
+    "@ant-design/icons": "^4.5.0",
     "@apollo/client": "^3.3.10",
     "@apollo/react-hooks": "^4.0.0",
     "@ckeditor/ckeditor5-build-classic": "24.0.0",
